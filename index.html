@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>angularMaterial框架</title>
+	</head>
+	<body ng-app="myApp">
+		<div>
+		  <form ng-submit="submit()" ng-controller="AppCtrl" ng-cloak>
+		    <p>Selected Value: <span class="radioValue">{{ data.group1 }}</span> </p>
+		
+		    <md-radio-group ng-model="data.group1">
+		
+		      <md-radio-button value="Apple" class="md-primary">Apple</md-radio-button>
+		      <md-radio-button value="Banana"> Banana </md-radio-button>
+		      <md-radio-button value="Mango">Mango</md-radio-button>
+		
+		    </md-radio-group>
+		
+		    <hr />
+		
+		    <p>Selected Value: <span class="radioValue">{{ data.group2 }}</span></p>
+		
+		    <md-radio-group ng-model="data.group2" class="md-primary">
+		
+		        <md-radio-button ng-repeat="d in radioData"
+		                         ng-value="d.value"
+		                         ng-disabled=" d.isDisabled "
+		                         ng-class="{'md-align-top-left': $index==1}" >
+		            {{ d.label }}<br/>
+		          <span class="ipsum"
+		                ng-if="$index == 1">
+		            Duis placerat lectus et justo mollis, nec sodales orci congue. Vestibulum semper non urna ac suscipit.
+		            Vestibulum tempor, ligula id laoreet hendrerit, massa augue iaculis magna,
+		            sit amet dapibus tortor ligula non nibh.
+		          </span>
+		
+		        </md-radio-button>
+		
+		    </md-radio-group>
+		
+		    <p>
+		      <md-button class="md-raised" ng-click="addItem()" type="button">Add</md-button>
+		      <md-button class="md-raised" ng-click="removeItem()" type="button">Remove</md-button>
+		    </p>
+		
+		    <hr />
+		
+		    <p style="margin-bottom: 0;">Graphic radio buttons need to be labeled with the <code>aria-label</code> attribute.</p>
+		    <p style="margin-top: 0;">Selected Avatar: <span class="radioValue">{{ data.group3 }}</span></p>
+		
+		    <md-radio-group ng-model="data.group3">
+		      <md-radio-button ng-repeat="it in avatarData"
+		                       ng-value="it.value"
+		                       aria-label="{{it.title}}">
+		          <md-icon md-svg-icon="{{it.id}}"></md-icon>
+		      </md-radio-button>
+		    </md-radio-group>
+		  </form>
+		</div>
+	</body>
+</html>
+<script src="js/angular.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+		ngular
+		  .module('myApp', ['ngMaterial'])
+		  .controller('AppCtrl', function($scope) {
+		
+		    $scope.data = {
+		      group1 : 'Banana',
+		      group2 : '2',
+		      group3 : 'avatar-1'
+		    };
+		
+		    $scope.avatarData = [{
+		        id: "avatars:svg-1",
+		        title: 'avatar 1',
+		        value: 'avatar-1'
+		      },{
+		        id: "avatars:svg-2",
+		        title: 'avatar 2',
+		        value: 'avatar-2'
+		      },{
+		        id: "avatars:svg-3",
+		        title: 'avatar 3',
+		        value: 'avatar-3'
+		    }];
+		
+		    $scope.radioData = [
+		      { label: '1', value: 1 },
+		      { label: '2', value: 2 },
+		      { label: '3', value: '3', isDisabled: true },
+		      { label: '4', value: '4' }
+		    ];
+		
+		    $scope.submit = function() {
+		      alert('submit');
+		    };
+		
+		    $scope.addItem = function() {
+		      var r = Math.ceil(Math.random() * 1000);
+		      $scope.radioData.push({ label: r, value: r });
+		    };
+		
+		    $scope.removeItem = function() {
+		      $scope.radioData.pop();
+		    };
+		
+		  })
+		  .config(function($mdIconProvider) {
+		    $mdIconProvider.iconSet("avatars", 'icons/avatar-icons.svg',128);
+		  });
+</script>
